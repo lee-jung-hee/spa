@@ -1,11 +1,12 @@
 <template>
-   <Link href="/">Main Page</Link>&nbsp;
-  <Link href="/hello">Show Page</Link>
+    <Link href="/">Main Page</Link>&nbsp;
+    <Link href="/hello">Show Page</Link>&nbsp;
+    <Link href="/listing">List Page</Link>&nbsp;
+    <Link href="/listing/create">Create Page</Link>
   <!-- <div>The page with time {{ timer }}</div> -->
   <div v-if="flashSuccess" class="success">
     {{ flashSuccess }}
   </div>
-  <div>{{ y }}</div>
   <slot>Default</slot>
 </template>
 
