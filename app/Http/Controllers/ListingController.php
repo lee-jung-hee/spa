@@ -34,6 +34,7 @@ class ListingController extends Controller
             'street' => 'required',
             'street_nr' => 'required|integer|min:1|max:1000',
             'price' => 'required|integer|min:1|max:20000000',
+            'office_name' => 'required'
         ]);
 
         Listing::create($validatedData);
@@ -73,6 +74,7 @@ class ListingController extends Controller
             'street' => 'required',
             'street_nr' => 'required|integer|min:1|max:1000',
             'price' => 'required|integer|min:1|max:20000000',
+            'office_name' => 'required'
         ]);
 
         $listing->update($validatedData);

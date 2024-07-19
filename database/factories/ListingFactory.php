@@ -27,7 +27,8 @@ class ListingFactory extends Factory
             'code' => $faker->postcode(),
             'street' => $faker->streetName(),
             'street_nr' => $faker->numberBetween(10, 200),
-            'price' => $faker->numberBetween(50_000, 2_000_000)
+            'price' => $faker->numberBetween(50_000, 2_000_000),
+            'office_name' => $faker->name()
         ];
     }
 }
