@@ -1,5 +1,5 @@
 <template>
-    <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 w-full">
+    <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 w-full">
       <div class="container mx-auto">
         <nav class="p-4 flex items-center justify-between">
           <div class="text-lg font-medium">
@@ -9,7 +9,7 @@
             <Link :href="route('listing.index')">오피스맵</Link>&nbsp;
           </div>
           <div class="text-lg font-medium">
-            <Link :href="route('listing.create')" class="bg-indigo-600 hover:bg-indigo-400 text-white font-medium p-2 rounded-md">+ 매물등록</Link>
+            <Link :href="route('listing.create')" class="btn-primary">+ 매물등록</Link>
           </div>
         </nav>
       </div>

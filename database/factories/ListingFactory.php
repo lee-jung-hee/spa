@@ -16,15 +16,18 @@ class ListingFactory extends Factory
      */
     public function definition(): array
     {
+        // Faker 인스턴스에 한국 로케일을 설정
+        $faker = \Faker\Factory::create('ko_KR');
+
         return [
-            'beds' => fake()->numberBetween(1, 7),
-            'baths' => fake()->numberBetween(1, 7),
-            'area' => fake()->numberBetween(30, 400),
-            'city' => fake()->city(),
-            'code' => fake()->postcode(),
-            'street' => fake()->streetName(),
-            'street_nr' => fake()->numberBetween(10, 200),
-            'price' => fake()->numberBetween(50_000, 2_000_000)
+            'beds' => $faker->numberBetween(1, 7),
+            'baths' => $faker->numberBetween(1, 7),
+            'area' => $faker->numberBetween(30, 400),
+            'city' => $faker->city(),
+            'code' => $faker->postcode(),
+            'street' => $faker->streetName(),
+            'street_nr' => $faker->numberBetween(10, 200),
+            'price' => $faker->numberBetween(50_000, 2_000_000)
         ];
     }
 }
