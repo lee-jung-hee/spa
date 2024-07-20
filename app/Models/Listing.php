@@ -18,6 +18,11 @@ class Listing extends Model
         'code',
         'street',
         'street_nr',
-        'price'
+        'price',
+        'amenities',
+    ];
+
+    protected $casts = [
+        'amenities' => 'array',
     ];
 }

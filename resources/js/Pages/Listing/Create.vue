@@ -30,7 +30,7 @@
         </div>
   
         <div class="col-span-4">
-          <label>주소</label>
+          <label class="label">주소</label>
           <input v-model="form.city" type="text" class="input"/>
           <div v-if="form.errors.city" class="input-error">
           {{ form.errors.city }}</div>
@@ -63,6 +63,18 @@
           <div v-if="form.errors.price" class="input-error">
           {{ form.errors.price }}</div>
         </div>
+
+        <div class="col-span-6">
+          <label class="label">편의시설</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+            <label v-for="(amenity, index) in availableAmenities" :key="index" class="flex items-center cursor-pointer">
+              <input type="checkbox" :value="amenity" v-model="form.amenities" class="mr-2">
+              <span>{{ amenity }}</span>
+            </label>
+          </div>
+          <div v-if="form.errors.amenities" class="input-error">
+          {{ form.errors.amenities }}</div>
+        </div>
   
         <div>
           <button type="submit" class="btn-primary">만들기</button>
@@ -71,29 +83,29 @@
     </form>
   </template>
 
-  <script setup>
-    import { useForm } from '@inertiajs/vue3'
+<script setup>
+import { useForm } from '@inertiajs/vue3'
 
-    const form = useForm({
-      office_name: null,
-      beds: 0,
-      baths: 0,
-      area: 0,
-      city: null,
-      street: null,
-      code: null,
-      street_nr: null,
-      price: 0,
-    })
-    const create = () => form.post(route('listing.store'))
-  </script>
+const availableAmenities = [
+  '회의실', 'WiFi', '주차가능', '프린터', '스튜디오', '택배계약', 
+  '24시간', '도어락', 'CCTV', '보안업체', '청소', '무료음료', 
+  '무료다과', '무료커피', '주말운영', '교통약자'
+]
+
+const form = useForm({
+  office_name: '',
+  amenities: [],
+  beds: 0,
+  baths: 0,
+  area: 0,
+  city: '',
+  street: '',
+  code: '',
+  street_nr: '',
+  price: 0,
+})
+
+const create = () => form.post(route('listing.store'))
+</script>
   
-  <style scoped>
-  label {
-    margin-right: 2em;
-  }
-  
-  div {
-    padding: 2px
-  }
-  </style>
+ 

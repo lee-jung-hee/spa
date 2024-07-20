@@ -63,6 +63,18 @@
           <div v-if="form.errors.price" class="input-error">
           {{ form.errors.price }}</div>
         </div>
+
+        <div class="col-span-6">
+          <label class="label">편의시설</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+            <label v-for="(amenity, index) in availableAmenities" :key="index" class="flex items-center cursor-pointer">
+              <input type="checkbox" :value="amenity" v-model="form.amenities" class="mr-2">
+              <span>{{ amenity }}</span>
+            </label>
+          </div>
+          <div v-if="form.errors.amenities" class="input-error">
+          {{ form.errors.amenities }}</div>
+        </div>
   
         <div>
           <button type="submit" class="btn-primary">Edit</button>
@@ -73,6 +85,12 @@
 
   <script setup>
     import { useForm } from '@inertiajs/vue3'
+
+    const availableAmenities = [
+      '회의실', 'WiFi', '주차가능', '프린터', '스튜디오', '택배계약', 
+      '24시간', '도어락', 'CCTV', '보안업체', '청소', '무료음료', 
+      '무료다과', '무료커피', '주말운영', '교통약자'
+    ]
 
     const props = defineProps({
       listing: Object,
@@ -86,7 +104,8 @@
       code: props.listing.code,
       street_nr: props.listing.street_nr,
       price: props.listing.price,
-      office_name: props.listing.office_name
+      office_name: props.listing.office_name,
+      amenities: props.listing.amenities || [],
     })
 
     const update = () => form.put(route('listing.update', {listing: props.listing.id}))
