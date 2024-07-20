@@ -31,7 +31,7 @@
                     할인율 계산기
                 </template>
                 <div>
-                    <label class="label">계약기간 ({{ term }}개월)</label>
+                    <label class="label">계약기간 ({{ term }}개월) <span class="text-xs">*최대12개월</span></label>
                     <input
                         v-model.number="term"
                         type="range" min="1" max="12" step="1"
@@ -43,9 +43,12 @@
                         type="range" min="100" max="5000" step="100"
                         class="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
-                    <div class="text-gray-600 dark:text-gray-300 mt-2">
+                    <div class="text-gray-600 dark:text-gray-300 mt-2 flex items-center">
                         <div class="text-gray-500 font-medium mb-1">할인 후 금액</div>
-                        <Price :price="discount" class="text3xl"></Price>
+                        <Price :price="discountRate" class="text3xl ml-2"></Price>
+                        <div class="text-green-500 ml-2">
+                            ({{ discountPercentage }}% 할인)
+                        </div>
                     </div>
                 </div>
             </Box>
@@ -130,30 +133,26 @@ import ListingSpace from '@/Components/ListingSpace.vue';
 import Price from '@/Components/Price.vue';
 import Box from '@/Components/UI/Box.vue'
 import OfficeName from '@/Components/OfficeName.vue'
+import { ref, computed } from 'vue'
+import { useDiscountRate } from '@/Composables/useDiscountRate'
 
-import {ref, computed} from 'vue'
-
-const term = ref(3)
+const term = ref(2)
 const deposit = ref(100)
 
 const props = defineProps({
         listing: Object,
     })
 
-const discount = computed(() => {
-let discountAmount = 0;
+const { discountRate } = useDiscountRate(props.listing.price, term, deposit)
 
-// 보증금 할인 적용
-if (deposit.value >= 200) {
-    discountAmount += Math.floor((deposit.value - 100) / 100) * 2000; // 200부터 100당 5000원 할인
-}
+const discountPercentage = computed(() => {
+    const originMonthly = props.listing.price;
+    const discountedPrice = discountRate.value;
 
-let discountedPrice = props.listing.price - discountAmount;
-
-// 계약 기간 할인 적용
-if (term.value > 3) {
-    discountedPrice -= (discountedPrice * (term.value - 3) / 100); // 4부터 1%씩 할인
-}
-return discountedPrice;
+    if (originMonthly !== 0) {
+        const discount = ((originMonthly - discountedPrice) / originMonthly) * 100;
+        return discount.toFixed(0); // 소수점 두 자리까지 표시
+    }
+    return 0;
 })
 </script>
