@@ -1,5 +1,5 @@
 <template>
-    <span>{{ formattedPrice }}</span>
+    <span>{{ formattedPrice }} 월</span>
   </template>
   
   <script setup>
