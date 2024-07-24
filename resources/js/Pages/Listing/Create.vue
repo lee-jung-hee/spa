@@ -3,7 +3,7 @@
       <div class="grid grid-cols-6 gap-4">
         <div class="col-span-6">
           <label class="label">오피스명</label>
-          <input v-model.number="form.office_name" type="text" class="input"/>
+          <input v-model="form.office_name" type="text" class="input"/>
           <div v-if="form.errors.office_name" class="input-error">
           {{ form.errors.office_name }}</div>
         </div>
@@ -85,12 +85,11 @@
 
 <script setup>
 import { useForm } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
-const availableAmenities = [
-  '회의실', 'WiFi', '주차가능', '프린터', '스튜디오', '택배계약', 
-  '24시간', '도어락', 'CCTV', '보안업체', '청소', '무료음료', 
-  '무료다과', '무료커피', '주말운영', '교통약자'
-]
+const props = defineProps({
+  availableAmenities: Array,
+})
 
 const form = useForm({
   office_name: '',
@@ -107,5 +106,3 @@ const form = useForm({
 
 const create = () => form.post(route('listing.store'))
 </script>
-  
- 

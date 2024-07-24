@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\List_;
 
 class ListingController extends Controller
 {
@@ -20,7 +19,9 @@ class ListingController extends Controller
 
     public function create()
     {
-        return inertia('Listing/Create');
+        return inertia('Listing/Create', [
+            'availableAmenities' => array_keys(config('amenities.amenities'))
+        ]);
     }
 
     public function store(Request $request)
@@ -49,7 +50,8 @@ class ListingController extends Controller
         return inertia(
             'Listing/Show',
             [
-                'listing' => $listing
+                'listing' => $listing,
+                'amenityIcons' => config('amenities.amenities')
             ]
         );
     }
@@ -59,7 +61,8 @@ class ListingController extends Controller
         return inertia(
             'Listing/Edit',
             [
-                'listing' => $listing
+                'listing' => $listing,
+                'availableAmenities' => array_keys(config('amenities.amenities'))
             ]
         );
     }
