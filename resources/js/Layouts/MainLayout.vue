@@ -8,8 +8,15 @@
           <div class="text-xl text-indigo-600 dark:text-indigo-600 font-bold">
             <Link :href="route('listing.index')">오피스맵</Link>&nbsp;
           </div>
-          <div class="text-lg font-medium">
+          <div v-if="user" class="flex items-center gap-4">
+            <div class="text-gray-500 dark:text-gray-50">{{ user.name }}</div>
             <Link :href="route('listing.create')" class="btn-primary">+ 매물등록</Link>
+            <div>
+              <Link :href="route('logout')" method="delete" as="button">Logout</Link>
+            </div>
+          </div>
+          <div v-else>
+            <Link :href="route('login')">Sign-in</Link>
           </div>
         </nav>
       </div>
@@ -29,5 +36,8 @@ import { route } from 'ziggy';
 const page = usePage()
 const flashSuccess = computed(
   () => page.props.flash.success,
+)
+const user = computed(
+  () => page.props.user
 )
 </script>
