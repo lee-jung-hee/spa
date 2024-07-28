@@ -3,7 +3,7 @@
         <div class="w-1/2 mx-auto">
             <div>
                 <label for="name" class="label">성함</label>
-                <input id="name" v-model="form.email" type="text" class="input" />
+                <input id="name" v-model="form.name" type="text" class="input" />
                 <div v-if="form.errors.name" class="input-error">{{ form.errors.name }}</div>
             </div>
             <div class="mt-4">
@@ -13,12 +13,12 @@
             </div>
             <div class="mt-4">
                 <label for="password" class="label">비밀번호</label>
-                <input id="password" v-model="form.password" type="password" class="input" />
+                <input id="password" v-model="form.password" type="password" class="input" placeholder="8자리 이상 숫자와 대문자가 조합되어야합니다"/>
                 <div v-if="form.errors.password" class="input-error">{{ form.errors.password }}</div>
             </div>
             <div class="mt-4">
                 <label for="password_confirmation" class="label">비밀번호 확인</label>
-                <input id="password_confirmation" v-model="form.password_confirmation" type="password" class="input" />
+                <input id="password_confirmation" v-model="form.password_confirmation" type="password" class="input" placeholder="비밀번호를 다시한번 입력해주세요" />
             </div>
             <div class="mt-4">
                 <button class="btn-primary w-full" type="submit">계정 만들기</button>
@@ -36,5 +36,5 @@ const form = useForm({
     password: null,
     password_confirmation: null,
 })
-const register = () => form.post()
+const register = () => form.post(route('user-account.store'))
 </script>
