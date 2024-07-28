@@ -14,12 +14,15 @@
             <div class="mt-4">
                 <button class="btn-primary w-full" type="submit">로그인</button>
             </div>
+            <div class="mt-2 text-center text-gray-500">
+                <Link :href="route('user-account.create')">회원가입</Link>
+            </div>
         </div>
     </form>
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { useForm, Link } from '@inertiajs/vue3'
 
 const form = useForm({
     email: null,
