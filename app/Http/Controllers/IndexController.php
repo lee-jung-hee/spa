@@ -24,3 +24,5 @@ class IndexController extends Controller
         return inertia('Index/Show');
     }
 }
+
+// Listing::make(['office_name' => '북조선오피스', 'beds' => 2, 'baths' =>2, 'area' => 100, 'city' => '평양', 'street' => 'Tinker st', 'street_nr' => 20, 'code' => 'TS', 'price' => 200_000]);

@@ -6,13 +6,15 @@ use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller
 {
     use AuthorizesRequests;
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->authorizeResource(Listing::class, 'listing');
     }
 
     public function index()
@@ -27,6 +29,7 @@ class ListingController extends Controller
 
     public function create()
     {
+        // $this->authorize('create', Listing::class);
         return inertia('Listing/Create', [
             'availableAmenities' => array_keys(config('amenities.amenities'))
         ]);
@@ -47,7 +50,8 @@ class ListingController extends Controller
             'amenities' => 'array'
         ]);
 
-        Listing::create($validatedData);
+        // 현재 로그인한 유저를 통해 Listing 생성
+        $request->user()->listings()->create($validatedData);
 
         return redirect()->route('listing.index')
             ->with('success', 'Listing was created!');
@@ -55,6 +59,10 @@ class ListingController extends Controller
 
     public function show(Listing $listing)
     {
+        // if (Auth::user()->cannot('view', $listing)) {
+        //     abort(403);
+        // }
+        // $this->authorize('view', $listing);
         return inertia(
             'Listing/Show',
             [
