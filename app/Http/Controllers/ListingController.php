@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
+
 class ListingController extends Controller
 {
     use AuthorizesRequests;
@@ -17,13 +18,27 @@ class ListingController extends Controller
         $this->authorizeResource(Listing::class, 'listing');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only([
+            'priceFrom',
+            'priceTo',
+            'beds',
+            'baths',
+            'areaFrom',
+            'areaTo'
+        ]);
+
+
+
         return inertia(
             'Listing/Index',
             [
-                'listings' => Listing::orderByDesc('created_at')
+                'filters' => $filters,
+                'listings' => Listing::mostRecent()
+                    ->filter($filters)
                     ->paginate(10)
+                    ->withQueryString()
             ]
         );
     }
